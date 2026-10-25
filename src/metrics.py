@@ -18,6 +18,14 @@ print("Genomsnittligt värde per order är: ", aov.round(2), "kronor")
 
 
 # 3. intäkt per kategori.
+def category_revenue_table(data):
+    category_revenue = (
+    data.groupby("category")["revenue"]
+    .agg(kronor = "sum", count = "count", mean = "mean", median = "median", std = "std")
+    .reset_index()
+    )  
+    return category_revenue
+ 
 category_revenue = (
     df.groupby("category")["revenue"]
     .agg(kronor = "sum", count = "count", mean = "mean", median = "median", std = "std")
