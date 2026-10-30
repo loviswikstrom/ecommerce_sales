@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-df = pd.read_csv("data/ecommerce_sales.csv")
+"""df = pd.read_csv("data/ecommerce_sales.csv")"""
 
 
 # 1. total intäkt
