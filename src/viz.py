@@ -1,14 +1,19 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+from matplotlib.ticker import FuncFormatter
 
 def plot_revenue_by_category(data):
-    fig,ax = plt.subplots(figsize=(10,6))
+    df = (
+        data.groupby("category", as_index=False)["revenue"]
+        .sum()
+        .sort_values("revenue",ascending=False)
+    )
 
-    ax.bar(data["category"], data["revenue"])
+    fig, ax = plt.subplots(figsize=(10, 6), constrained_layout=True)
+    ax.bar(df["category"], df["revenue"])
     ax.set_title("Intäkt per kategori")
     ax.set_xlabel("Kategori")
     ax.set_ylabel("Intäkt (kr)")
-
     return fig
 
 def plot_revenue_by_city(data):
