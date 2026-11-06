@@ -6,6 +6,7 @@ def revenue_sum(data):
     total = round(data["revenue"].sum(), 2)
     return total
 
+
 # 2. totalt antal enheter.
 def units_sum(data):
     units_total = data["units"].sum()
@@ -59,7 +60,6 @@ def top_category_revenue(data):
     return top_category
 
 
-
 # 7. högst genomsnittligt ordervärde per stad
 def aov_per_city(data):
     city_orders = data.groupby("city")["order_id"].nunique()
@@ -81,3 +81,21 @@ def revenue_overview(data):
     print("Lägsta ordervärde:", round(minsta, 2), "kronor")
     print("Högsta ordervärde:", round(hogsta, 2), "kronor")
     print("Standardavvikelse:", round(standardavvikelse, 2), "kronor")
+
+
+# 9. avvikelser
+def outliers_category(data):
+    category_revenue = data.groupby("category")["revenue"].sum()
+    return category_revenue
+
+
+def outliers_month(data):
+    data["date"] = pd.to_datetime(data["date"])
+    data["month"] = data["date"].dt.to_period("M")
+    revenue_per_month = data.groupby("month")["revenue"].sum()
+    return revenue_per_month
+
+
+def outliers_order(data):
+    order = round(data["revenue"], 2)
+    return order

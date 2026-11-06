@@ -23,7 +23,7 @@ class EcommerceAnalyzer:
     def average_order_value(self) -> pd.DataFrame:
         """Redovisar för genomsnittligt ordervärde (AOV)"""
         aov = metrics.aov(self.data)
-        print("Genomsnittligt ordervärde (AOV):", aov)
+        print("Genomsnittligt ordervärde (AOV):", aov, " kr")
         viz.plot_order_value_dist(self.data)
         plt.show()
 
@@ -53,26 +53,17 @@ class EcommerceAnalyzer:
         print("Top-3 kategorier:")
         print(table.iloc[:3, :2].round(2).to_string(index=False))
 
-    def avvikelser(self) -> pd.Dataframe:
-        # Identifiera högsta och lägsta intäkt per kategori
-        print("Kategori med högst intäkt:")
-        print(intakt_kategori.idxmax(), round(intakt_kategori.max(), 2))
+    def outliers(self) -> pd.DataFrame:
+        table_hi = metrics.outliers_category(self.data).sort_values(ascending=False)
+        table_lo = metrics.outliers_category(self.data).sort_values(ascending=True)
+        print("Kategori med högst intäkt: ", round(table_hi.head(1), 2))
+        print("Kategori med lägst intäkt:", round(table_lo.head(1), 2))
 
-        print("\nKategori med lägst intäkt:")
-        print(intakt_kategori.idxmin(), round(intakt_kategori.min(), 2))
+        month_outliers = metrics.outliers_month(self.data)
+        print("Månad med högst intäkt:", month_outliers.idxmax(), round(month_outliers.max(), 2))
+        print("Månad med lägst intäkt:", month_outliers.idxmin(), round(month_outliers.min(), 2))
+       
+        order_outliers = metrics.outliers_order(self.data)
+        print("Högsta ordervärde:", order_outliers.max(), "kronor")
+        print("Lägsta ordervärde:", order_outliers.min(), "kronor")
 
-        # Identifiera högsta och lägsta intäkt per månad
-        df2["date"] = pd.to_datetime(df2["date"])
-        # Skapa en kolumn med år och månad
-        df2["month"] = df2["date"].dt.to_period("M")
-        intakt_manad = df2.groupby("month")["revenue"].sum()
-
-        print("\nMånad med högst intäkt:")
-        print(intakt_manad.idxmax(), round(intakt_manad.max(), 2))
-
-        print("\nMånad med lägst intäkt:")
-        print(intakt_manad.idxmin(), round(intakt_manad.min(), 2))
-
-        # Undersök variationen i ordervärden
-        print("\nLägsta ordervärde:", round(order_intakter.min(), 2))
-        print("Högsta ordervärde:", round(order_intakter.max(), 2))
