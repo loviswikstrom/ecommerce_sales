@@ -14,8 +14,8 @@ class EcommerceAnalyzer:
         fördelning över månad/vecka"""
         revenue = metrics.revenue_sum(self.data)
         units = metrics.units_sum(self.data)
-        print(f"Total intäkt: {revenue}")
-        print(f"Antal enheter: {units}")
+        print(f"Total intäkt: {revenue} kronor")
+        print(f"Antal enheter: {units} styck")
         viz.plot_revenue_over_time(self.data, "month")
         viz.plot_revenue_over_time(self.data, "week")
         plt.show()
@@ -52,3 +52,27 @@ class EcommerceAnalyzer:
         table = table.rename(columns={"category": "kategori"})
         print("Top-3 kategorier:")
         print(table.iloc[:3, :2].round(2).to_string(index=False))
+
+    def avvikelser(self) -> pd.Dataframe:
+        # Identifiera högsta och lägsta intäkt per kategori
+        print("Kategori med högst intäkt:")
+        print(intakt_kategori.idxmax(), round(intakt_kategori.max(), 2))
+
+        print("\nKategori med lägst intäkt:")
+        print(intakt_kategori.idxmin(), round(intakt_kategori.min(), 2))
+
+        # Identifiera högsta och lägsta intäkt per månad
+        df2["date"] = pd.to_datetime(df2["date"])
+        # Skapa en kolumn med år och månad
+        df2["month"] = df2["date"].dt.to_period("M")
+        intakt_manad = df2.groupby("month")["revenue"].sum()
+
+        print("\nMånad med högst intäkt:")
+        print(intakt_manad.idxmax(), round(intakt_manad.max(), 2))
+
+        print("\nMånad med lägst intäkt:")
+        print(intakt_manad.idxmin(), round(intakt_manad.min(), 2))
+
+        # Undersök variationen i ordervärden
+        print("\nLägsta ordervärde:", round(order_intakter.min(), 2))
+        print("Högsta ordervärde:", round(order_intakter.max(), 2))

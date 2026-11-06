@@ -1,9 +1,6 @@
 import pandas as pd
 import numpy as np
 
-"""df = pd.read_csv("data/ecommerce_sales.csv")"""
-
-
 # 1. total intäkt
 def revenue_sum(data):
     total = round(data["revenue"].sum(), 2)
@@ -29,11 +26,11 @@ def category_revenue_table(data):
     data.groupby("category")["revenue"]
     .agg(
         kronor = "sum",
-        count = "count",
-        mean = "mean",
+        antal = "count",
+        medelvärde = "mean",
         median = "median",
         std = "std"
-    )
+        )
     .reset_index()
     )  
     return category_revenue
@@ -43,8 +40,14 @@ def category_revenue_table(data):
 def city_revenue(data):
     city_revenue = (
         data.groupby("city")["revenue"]
-        .agg(kronor = "sum", count = "count", mean = "mean", median = "median", std = "std")
-        .reset_index()
+        .agg(
+            kronor = "sum",
+            antal = "count",
+            medelvärde = "mean",
+            median = "median",
+            std = "std"
+            )
+    .reset_index()
     )
     return city_revenue
 
@@ -65,3 +68,16 @@ def aov_per_city(data):
     aov_per_city = city_revenue / city_orders
     aov_per_city = aov_per_city.sort_values(ascending=False)
     return aov_per_city
+
+
+# 8. översikt över intäkt
+def revenue_overview(data):
+    median = data["revenue"].median()
+    minsta = data["revenue"].min()
+    hogsta = data["revenue"].max()
+    standardavvikelse = data["revenue"].std()
+
+    print("Median:", round(median, 2), "kronor")
+    print("Lägsta ordervärde:", round(minsta, 2), "kronor")
+    print("Högsta ordervärde:", round(hogsta, 2), "kronor")
+    print("Standardavvikelse:", round(standardavvikelse, 2), "kronor")
