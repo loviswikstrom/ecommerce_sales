@@ -77,10 +77,10 @@ def revenue_overview(data):
     hogsta = data["revenue"].max()
     standardavvikelse = data["revenue"].std()
 
-    print("Median:", round(median, 2), "kronor")
-    print("Lägsta ordervärde:", round(minsta, 2), "kronor")
-    print("Högsta ordervärde:", round(hogsta, 2), "kronor")
-    print("Standardavvikelse:", round(standardavvikelse, 2), "kronor")
+    print("Median:", round(median, 2), "kr")
+    print("Lägsta ordervärde:", round(minsta, 2), "kr")
+    print("Högsta ordervärde:", round(hogsta, 2), "kr")
+    print("Standardavvikelse:", round(standardavvikelse, 2), "kr")
 
 
 # 9. avvikelser
@@ -90,8 +90,7 @@ def outliers_category(data):
     cmin = category_revenue.idxmin() 
     rmax = round(category_revenue.max(), 2)
     rmin = round(category_revenue.min(), 2)
-    return ("Kategori med högst intäkt: ", cmax, rmax, 
-            "\nKategori med lägst intäkt:", cmin, rmin)
+    return (f"Kategori med högst intäkt: {cmax} med {rmax} kr, \nKategori med lägst intäkt: {cmin} med {rmin} kr")
 
 
 def outliers_month(data):

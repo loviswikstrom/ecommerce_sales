@@ -55,13 +55,13 @@ class EcommerceAnalyzer:
 
     def outliers(self) -> pd.DataFrame:
         category_outliers = metrics.outliers_category(self.data)
-        print(repr(category_outliers))
+        print(f"{category_outliers}")
 
         month_outliers = metrics.outliers_month(self.data)
-        print("Månad med högst intäkt:", month_outliers.idxmax(), round(month_outliers.max(), 2))
+        print("\nMånad med högst intäkt:", month_outliers.idxmax(), round(month_outliers.max(), 2))
         print("Månad med lägst intäkt:", month_outliers.idxmin(), round(month_outliers.min(), 2))
        
         order_outliers = metrics.outliers_order(self.data)
-        print("Högsta ordervärde:", order_outliers.max(), "kronor")
-        print("Lägsta ordervärde:", order_outliers.min(), "kronor")
+        print("\nHögsta ordervärde:", order_outliers.max(), "kr")
+        print("Lägsta ordervärde:", order_outliers.min(), "kr")
 
