@@ -86,7 +86,12 @@ def revenue_overview(data):
 # 9. avvikelser
 def outliers_category(data):
     category_revenue = data.groupby("category")["revenue"].sum()
-    return category_revenue
+    cmax = category_revenue.idxmax() 
+    cmin = category_revenue.idxmin() 
+    rmax = round(category_revenue.max(), 2)
+    rmin = round(category_revenue.min(), 2)
+    return ("Kategori med högst intäkt: ", cmax, rmax, 
+            "\nKategori med lägst intäkt:", cmin, rmin)
 
 
 def outliers_month(data):

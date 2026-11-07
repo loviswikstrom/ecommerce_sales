@@ -54,10 +54,8 @@ class EcommerceAnalyzer:
         print(table.iloc[:3, :2].round(2).to_string(index=False))
 
     def outliers(self) -> pd.DataFrame:
-        table_hi = metrics.outliers_category(self.data).sort_values(ascending=False)
-        table_lo = metrics.outliers_category(self.data).sort_values(ascending=True)
-        print("Kategori med högst intäkt: ", round(table_hi.head(1), 2))
-        print("Kategori med lägst intäkt:", round(table_lo.head(1), 2))
+        category_outliers = metrics.outliers_category(self.data)
+        print(repr(category_outliers))
 
         month_outliers = metrics.outliers_month(self.data)
         print("Månad med högst intäkt:", month_outliers.idxmax(), round(month_outliers.max(), 2))
