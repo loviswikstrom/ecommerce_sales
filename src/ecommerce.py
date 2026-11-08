@@ -14,8 +14,8 @@ class EcommerceAnalyzer:
         fördelning över månad/vecka"""
         revenue = metrics.revenue_sum(self.data)
         units = metrics.units_sum(self.data)
-        print(f"Total intäkt: {revenue}")
-        print(f"Antal enheter: {units}")
+        print(f"Total intäkt: {revenue} kronor")
+        print(f"Antal enheter: {units} styck")
         viz.plot_revenue_over_time(self.data, "month")
         viz.plot_revenue_over_time(self.data, "week")
         plt.show()
@@ -23,7 +23,7 @@ class EcommerceAnalyzer:
     def average_order_value(self) -> pd.DataFrame:
         """Redovisar för genomsnittligt ordervärde (AOV)"""
         aov = metrics.aov(self.data)
-        print("Genomsnittligt ordervärde (AOV):", aov)
+        print("Genomsnittligt ordervärde (AOV):", aov, " kr")
         viz.plot_order_value_dist(self.data)
         plt.show()
 
@@ -52,3 +52,16 @@ class EcommerceAnalyzer:
         table = table.rename(columns={"category": "kategori"})
         print("Top-3 kategorier:")
         print(table.iloc[:3, :2].round(2).to_string(index=False))
+
+    def outliers(self) -> pd.DataFrame:
+        category_outliers = metrics.outliers_category(self.data)
+        print(f"{category_outliers}")
+
+        month_outliers = metrics.outliers_month(self.data)
+        print("\nMånad med högst intäkt:", month_outliers.idxmax(), round(month_outliers.max(), 2))
+        print("Månad med lägst intäkt:", month_outliers.idxmin(), round(month_outliers.min(), 2))
+       
+        order_outliers = metrics.outliers_order(self.data)
+        print("\nHögsta ordervärde:", order_outliers.max(), "kr")
+        print("Lägsta ordervärde:", order_outliers.min(), "kr")
+

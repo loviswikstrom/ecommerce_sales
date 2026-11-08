@@ -36,7 +36,7 @@ def plot_revenue_over_time(data, period="month"):
     if period == "month":
         data_temp["period"] = data_temp["date"].dt.month
         ticks = range(1, 13)
-        label = "månad Januari-Juni 2024"
+        label = "månad januari-juni 2024"
     else:
         data_temp["period"] = data_temp["date"].dt.isocalendar().week.astype(int)
         ticks = range(1, 54, 4)
@@ -48,9 +48,9 @@ def plot_revenue_over_time(data, period="month"):
     ax.plot(rev.index, rev.values, marker="o")
     ax.set_xticks(rev.index if period == "month" else rev.index[::4])
     ax.set_xlim(rev.index.min(), rev.index.max())
-    ax.set_title(f"Revenue per {label}")
+    ax.set_title(f"Intäkt per {label}")
     ax.set_xlabel(label.capitalize())
-    ax.set_ylabel("Revenue")
+    ax.set_ylabel("Intäkt")
     ax.grid(True, alpha=0.3)
     plt.tight_layout()
     plt.show()
