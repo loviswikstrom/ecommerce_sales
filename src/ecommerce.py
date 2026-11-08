@@ -14,7 +14,7 @@ class EcommerceAnalyzer:
         fördelning över månad/vecka"""
         revenue = metrics.revenue_sum(self.data)
         units = metrics.units_sum(self.data)
-        print(f"Total intäkt: {revenue} kronor")
+        print(f"Total intäkt: {revenue} kr")
         print(f"Antal enheter: {units} styck")
         viz.plot_revenue_over_time(self.data, "month")
         viz.plot_revenue_over_time(self.data, "week")
